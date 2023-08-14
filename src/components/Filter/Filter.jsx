@@ -1,20 +1,22 @@
-import PropTypes from 'prop-types';
 import { Input } from './Filter.styled';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterChanged } from 'redax/actions';
 
-export const Filter = ({ onCheangedFilter, filterValue }) => {
-    return (
-        <>
-            <Input
-                type="text"
-                name="filter"
-                onChange={onCheangedFilter}
-                value={filterValue}
-            />
-        </>
-    )
-}
+export const Filter = () => {
+  const filter = useSelector(state => state.filter);
+  const dispatch = useDispatch();
 
-Filter.propTypes = {
-    filterValue: PropTypes.string.isRequired,
-    onCheangedFilter:PropTypes.func.isRequired,
+  const onCheangedFilter = ({ target: { value } }) => {
+    dispatch(filterChanged(value));
+  };
+  return (
+    <>
+      <Input
+        type="text"
+        name="filter"
+        onChange={onCheangedFilter}
+        value={filter}
+      />
+    </>
+  );
 };
