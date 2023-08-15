@@ -1,20 +1,18 @@
-import PropTypes from 'prop-types';
 import { Input } from './Filter.styled';
+import { setFilter } from 'redux/filterSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const Filter = ({ onCheangedFilter, filterValue }) => {
-    return (
-        <>
-            <Input
-                type="text"
-                name="filter"
-                onChange={onCheangedFilter}
-                value={filterValue}
-            />
-        </>
-    )
-}
-
-Filter.propTypes = {
-    filterValue: PropTypes.string.isRequired,
-    onCheangedFilter:PropTypes.func.isRequired,
+export const Filter = () => {
+  const { filter } = useSelector(state => state.filter);
+  const dispatch = useDispatch();
+  return (
+    <>
+      <Input
+        type="text"
+        name="filter"
+        onChange={({ target: { value } }) => dispatch(setFilter(value))}
+        value={filter}
+      />
+    </>
+  );
 };
